@@ -1,4 +1,5 @@
 import cats.data.EitherT
+import cats.effect.unsafe.implicits.global
 import cats.effect.{Concurrent, IO}
 import cats.implicits.toBifunctorOps
 
@@ -17,15 +18,17 @@ object Main {
 
   def main(args: Array[String]): Unit = {
     val client = new ClientImpl[IO]
-    val res = for {
+    val _ = for {
       result <- EitherT(client.foo("World").map(
         _.leftMap(error => new MyError(s"Failed with error: ${error.getMessage}"))
       ))
-    } yield {
-      result
-    }
 
-    println(res.value)
+      anotherResult <- EitherT.right[MyError](
+        IO.pure(s"Another result: $result")
+      )
+    } yield {
+      anotherResult
+    }
   }
 }
 
