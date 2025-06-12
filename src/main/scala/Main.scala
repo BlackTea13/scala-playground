@@ -2,7 +2,6 @@ import cats.data.EitherT
 import cats.effect.{Concurrent, IO}
 import cats.implicits.toBifunctorOps
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 object Main {
   class MyError(message: String) extends Throwable(message)
 
