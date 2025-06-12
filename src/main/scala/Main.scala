@@ -22,10 +22,7 @@ object Main {
         _.leftMap(error => new MyError(s"Failed with error: ${error.getMessage}"))
       ))
     } yield {
-      result match {
-        case Right(message) => println(message)
-        case Left(error) => println(s"Error: $error")
-      }
+      result
     }
 
     println(res.value)
