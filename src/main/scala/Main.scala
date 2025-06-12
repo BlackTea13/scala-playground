@@ -23,7 +23,9 @@ object Main {
       ))
 
       anotherResult <- EitherT(
-        IO.pure(s"$result")
+        client.foo(result).map(
+          _.leftMap(error => new MyError(s"Failed with error: ${error.getMessage}"))
+        )
       )
     } yield {
       anotherResult
